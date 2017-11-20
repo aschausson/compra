@@ -4,7 +4,7 @@ body{
 
 
 #contenedor{
-    width: 90%;
+    width: 95%;
     min-height: 400px;
     margin: 0 auto;
     border: 4px solid grey;
@@ -84,7 +84,7 @@ button span{
 .producto{
     background-color: white;
     border: 1px solid grey;
-    width: 70%;
+    width: 100%;
     height: 30px;
     font-size: 18px;
 padding-left: 7px;
@@ -108,5 +108,9 @@ align-items: center;
 }
 
 #inputProducto{
-	width: 160px;
+	width: 150px;
+}
+
+#inputUnidad{
+    width: 35px;
 }

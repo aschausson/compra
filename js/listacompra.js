@@ -3,6 +3,8 @@ var divCarro;
 
 window.onload = function(){
     generarInterface();
+    recuperaLista();
+    document.getElementById("inputCantidad").focus();
 }
 
 
@@ -28,14 +30,17 @@ function generarBotones(){
     divBotones = creaNodo(contenedor, "div", "divBotones");
     botonSelect = creaBoton(divBotones, "", "botonSelect");
     botonNoSelect = creaBoton(divBotones, "", "botonNoSelect");
+    botonTacha = creaBoton(divBotones, "", "botonTacha");
     botonBorra = creaBoton(divBotones, "", "botonBorra");
 
     botonSelect.addEventListener("click", function(){seleccionaTodo(true)}, false);
     botonNoSelect.addEventListener("click", function(){seleccionaTodo(false)}, false);
     botonBorra.addEventListener("click", borraProducto, false);
+    botonTacha.addEventListener("click", tachaProducto, false);
 	
 	creaNodo(botonBorra, "span", null, null, null, "glyphicon glyphicon-trash");
-	creaNodo(botonNoSelect, "span", null, null, null, "glyphicon glyphicon-unchecked");
+    creaNodo(botonNoSelect, "span", null, null, null, "glyphicon glyphicon-unchecked");
+    creaNodo(botonTacha, "span", null, null, null, "glyphicon glyphicon-ban-circle");
 	creaNodo(botonSelect, "span", null, null, null, "glyphicon glyphicon-check");
 }
 
@@ -54,15 +59,17 @@ function generarPanelColores(){
     botonColor4.setAttribute("style", "background-color: lightgoldenrodyellow");
 	
 	creaNodo(botonReinicia, "span", null, null, null, "glyphicon glyphicon-refresh");
-	creaNodo(botonOrdena, "span", null, null, null, "glyphicon glyphicon-resize-vertical");
+    creaNodo(botonOrdena, "span", null, null, null, "glyphicon glyphicon-resize-vertical");
 }
 
 function generarInputs(){
     divInputs = creaNodo(contenedor, "div", "divInputs");
     inputCantidad = creaNodo(divInputs, "input", "inputCantidad",null,"number");
+    inputUnidad = creaNodo(divInputs, "input", "inputUnidad",null,"text");
     inputProducto = creaNodo(divInputs, "input", "inputProducto",null,"text");
 
-    inputCantidad.setAttribute("placeholder","Cant");
+    inputCantidad.setAttribute("placeholder","Cant.");
+    inputUnidad.setAttribute("placeholder","Unid.");
     inputProducto.setAttribute("placeholder","Producto");
 
     botonMas = creaBoton(divInputs, "", "botonMas");
@@ -112,16 +119,21 @@ function seleccionaTodo(modo){
 
 function nuevoProducto(){
     cantidadProducto = document.getElementById("inputCantidad").value;
+    unidadProducto =  document.getElementById("inputUnidad").value;
     nombreProducto = document.getElementById("inputProducto").value;
 
     if (cantidadProducto == "" || nombreProducto == "")
         alert("Algun de los campos está vacío.");
     else{
-        producto = creaNodo(divCarro, "div", null, cantidadProducto + " " + nombreProducto, null, "producto");
+        producto = creaNodo(divCarro, "div", null, cantidadProducto + unidadProducto + " " + nombreProducto, null, "producto");
         check = creaNodo(producto, "input", null, null, "checkbox", "check");
+        producto.setAttribute("style", "background-color: white");
 
         document.getElementById("inputCantidad").value = "";
+        document.getElementById("inputUnidad").value = "";
         document.getElementById("inputProducto").value = "";
+        almacenaLista();
+        document.getElementById("inputCantidad").focus();
     }
 
     
@@ -129,24 +141,45 @@ function nuevoProducto(){
 }
 
 function borraProducto(){
-    hijos = divCarro.getElementsByClassName("producto");
-    contador = 0;
-    for (i = hijos.length-1; i >= 0; i--) {
-        check = hijos[i].getElementsByClassName("check");
- 
-        if (check[0].checked){
-            contador++;
-            hijoInterno = hijos[i].firstChild;
-            while (hijoInterno != null) {
-                borra = hijoInterno;
-                hijoInterno = hijoInterno.nextSibling
-                hijos[i].removeChild(borra);
+    if (confirm("¿Desea borrar los elementos seleccionados?")){
+        hijos = divCarro.getElementsByClassName("producto");
+        contador = 0;
+        for (i = hijos.length-1; i >= 0; i--) {
+            check = hijos[i].getElementsByClassName("check");
+     
+            if (check[0].checked){
+                contador++;
+                hijoInterno = hijos[i].firstChild;
+                while (hijoInterno != null) {
+                    borra = hijoInterno;
+                    hijoInterno = hijoInterno.nextSibling
+                    hijos[i].removeChild(borra);
+                }
+                divCarro.removeChild(hijos[i]);
             }
-            divCarro.removeChild(hijos[i]);
         }
+        if (contador == 0)
+            alert("No se ha seleccionado ningún elemento.");
     }
-    if (contador == 0)
-        alert("No se ha seleccionado ningún elemento.");
+    almacenaLista();
+
+}
+
+
+function tachaProducto(){
+    hijos = divCarro.getElementsByClassName("producto");
+    for (i = 0; i < hijos.length; i++) {
+        check = hijos[i].getElementsByClassName("check");
+
+        if (check[0].checked)
+            if (hijos[i].style.textDecoration == "line-through")
+                hijos[i].style.textDecoration = "";
+            else
+                hijos[i].style.textDecoration = "line-through";
+        
+    }
+    almacenaLista();
+    
 }
 
 
@@ -161,6 +194,7 @@ function cambiaColor(){
         hijos[i].setAttribute("style", "background-color: " + color);
         
     }
+    almacenaLista();
 }
 
 
@@ -173,6 +207,7 @@ function reiniciarColor(){
         hijos[i].setAttribute("style", "background-color: " + color);
         
     }
+    almacenaLista();
 }
 
 
@@ -190,6 +225,7 @@ function reordenaColor(){
             }
         }
     }
+    almacenaLista();
 }
 
 
@@ -225,4 +261,49 @@ function creaBoton(padre, texto, id, clase){
         nodo.className = clase;
     padre.appendChild(nodo);
     return nodo;
+}
+
+
+//almacenamiento en localstorage de la lista para navegadores que lo soporten
+function almacenaLista(){
+    if(window.navigator.userAgent.indexOf("Edge") == -1){
+        lista = divCarro.getElementsByClassName("producto");
+        guardar = "";
+        for (var i = 0; i < lista.length; i++) {
+            guardar += lista[i].textContent + "|";
+            guardar += lista[i].style.backgroundColor + "|";
+            if (lista[i].style.textDecoration == "line-through")
+                guardar += "false" + "|";
+            else
+                guardar += "true" + "|";
+        }
+//        alert(lista[0].textContent);
+    //    localStorage.setItem("lista", JSON.stringify(lista));
+   //     alert("guardado");
+    localStorage.setItem("lista", guardar);
+    }
+}
+
+function recuperaLista(){
+    if(window.navigator.userAgent.indexOf("Edge") == -1){
+       // var lista = [];
+      //  lista = JSON.parse(localStorage.getItem("lista"));
+      storage = localStorage.getItem("lista");
+      if (storage != null){
+        guardado = storage.split("|");
+        
+            for (var i = 0; i < guardado.length-2; i= i+3) {
+           //     divCarro.appendChild(lista[i]);
+             //   alert(lista[i].textContent);
+             producto = creaNodo(divCarro, "div", null, guardado[i + 0], null, "producto");
+             check = creaNodo(producto, "input", null, null, "checkbox", "check");
+             producto.setAttribute("style", "background-color: " + guardado[i + 1]);
+             if (guardado[i + 2] == "false")
+                producto.style.textDecoration = "line-through";
+             divCarro.appendChild(producto);
+
+            }
+        }
+       //alert("recuperado");
+    }
 }
