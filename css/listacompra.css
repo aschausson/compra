@@ -1,0 +1,98 @@
+body{
+    background-color: lightsteelblue;
+    font-family: Arial;
+}
+
+#contenedor{
+    width: 80%;
+    min-height: 400px;
+    margin: 0 auto;
+    border: 4px solid grey;
+    background-color: lightgray;
+    border-radius: 10px;
+    padding: 20px;
+	display: flex;
+	flex-flow: column wrap;
+}
+
+#divTitulo{
+  /*  width: 100%;*/
+	display: flex;
+	flex-flow: row nowrap;
+
+}
+h1{
+    padding-top: 0px;
+    font-size: 40px;
+}
+
+#carro{
+    width: 60px;
+	height: 50px;
+
+	/*margin-bottom: 30px;*/
+}
+/*
+#titulo{
+    display: inline-block;
+}*/
+/*
+#divBotones{
+    width: 60%;
+    display: inline-block;
+	height: 50px;
+}*/
+
+button{
+    width: 30px;
+    height: 30px;
+	padding: 0px;
+	background-color: Transparent;
+    background-repeat:no-repeat;
+    border: none;
+    cursor:pointer;
+    overflow: hidden;
+    outline:none;
+}
+button span{
+	font-size: 25px;
+}
+
+#divPanel{
+    min-width: 255px;
+  /*  border: 2px solid orange;
+    background-color: darkgrey;*/
+    border-radius: 5px;
+    float: right;
+	
+}
+
+#divCarro{
+    width: 100%;
+}
+
+.producto{
+    background-color: white;
+    border: 1px solid grey;
+    width: 70%;
+    height: 30px;
+    font-size: 18px;
+padding-left: 7px;
+
+display: flex;
+flex-flow:  row-reverse nowrap;
+justify-content: flex-end;
+align-items: baseline; 
+
+}
+
+#divInputs, #divPanel, #divBotones{
+display: flex;
+flex-flow:  row wrap;
+align-items: center; 
+	height: 50px;
+}
+
+#inputCantidad{
+    width: 50px;
+}
