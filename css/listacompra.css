@@ -96,3 +96,7 @@ align-items: center;
 #inputCantidad{
     width: 50px;
 }
+
+#inputProducto{
+	width: 165px;
+}
