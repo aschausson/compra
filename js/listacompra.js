@@ -1,309 +1,338 @@
-var contenedor;
-var divCarro;
+var contenedor
+var divCarro
 
+//se llama a las funciones que crean la interface y se intenta recuperar los datos guardados
 window.onload = function(){
-    generarInterface();
-    recuperaLista();
-    document.getElementById("inputCantidad").focus();
+    generarInterface()
+    recuperaLista()
+    generarAyuda()
+    document.getElementById("inputCantidad").focus()
 }
 
 
 function generarInterface(){
-    contenedor = creaNodo(document.body, "div", "contenedor");
-    generarTitulo();
-    generarBotones();
-    generarPanelColores();
-    generarInputs();
-    divCarro = creaNodo(contenedor, "div", "divCarro");
-    listenerBotones();
+    contenedor = creaNodo(document.body, "div", "contenedor")
+    generarTitulo()
+    generarBotones()
+    generarPanelColores()
+    generarInputs()
+    divCarro = creaNodo(contenedor, "div", "divCarro")
+    listenerBotones()
 }
 
 
 function generarTitulo(){
-    divTitulo = creaNodo(contenedor, "div", "divTitulo");
-    carro = creaNodo(divTitulo, "img", "carro");
-    carro.setAttribute("src", "img/cart.png");
-    titulo = creaNodo(divTitulo, "h1", "titulo", "Lista de la compra");
+    var divTitulo = creaNodo(contenedor, "div", "divTitulo")
+    var carro = creaNodo(divTitulo, "img", "carro")
+    carro.setAttribute("src", "img/cart.png")
+    creaNodo(divTitulo, "h1", "titulo", "Lista de la compra")
 }
+
 
 function generarBotones(){
-    divBotones = creaNodo(contenedor, "div", "divBotones");
-    botonSelect = creaBoton(divBotones, "", "botonSelect");
-    botonNoSelect = creaBoton(divBotones, "", "botonNoSelect");
-    botonTacha = creaBoton(divBotones, "", "botonTacha");
-    botonBorra = creaBoton(divBotones, "", "botonBorra");
+    var botonAyuda = creaBoton(contenedor, "", "botonAyuda")
+    var divBotones = creaNodo(contenedor, "div", "divBotones")
+    var botonSelect = creaBoton(divBotones, "", "botonSelect")
+    var botonNoSelect = creaBoton(divBotones, "", "botonNoSelect")
+    var botonTacha = creaBoton(divBotones, "", "botonTacha")
+    var botonBorra = creaBoton(divBotones, "", "botonBorra")
 
-    botonSelect.addEventListener("click", function(){seleccionaTodo(true)}, false);
-    botonNoSelect.addEventListener("click", function(){seleccionaTodo(false)}, false);
-    botonBorra.addEventListener("click", borraProducto, false);
-    botonTacha.addEventListener("click", tachaProducto, false);
+    botonSelect.addEventListener("click", function(){seleccionaTodo(true)}, false)
+    botonNoSelect.addEventListener("click", function(){seleccionaTodo(false)}, false)
+    botonBorra.addEventListener("click", borraProducto, false)
+    botonTacha.addEventListener("click", tachaProducto, false)
+    botonAyuda.addEventListener("click", function(){mostrarAyuda()}, false)
 	
-	creaNodo(botonBorra, "span", null, null, null, "glyphicon glyphicon-trash");
-    creaNodo(botonNoSelect, "span", null, null, null, "glyphicon glyphicon-unchecked");
-    creaNodo(botonTacha, "span", null, null, null, "glyphicon glyphicon-ban-circle");
-	creaNodo(botonSelect, "span", null, null, null, "glyphicon glyphicon-check");
+    creaNodo(botonBorra, "span", null, null, null, "glyphicon glyphicon-trash")
+    creaNodo(botonNoSelect, "span", null, null, null, "glyphicon glyphicon-unchecked")
+    creaNodo(botonTacha, "span", null, null, null, "glyphicon glyphicon-ban-circle")
+    creaNodo(botonSelect, "span", null, null, null, "glyphicon glyphicon-check")
+    creaNodo(botonAyuda, "span", null, null, null, "glyphicon glyphicon-question-sign")
 }
+
 
 function generarPanelColores(){
-    divPanel = creaNodo(contenedor, "div", "divPanel", "Categoría:");
-    botonReinicia = creaBoton(divPanel, "", "botonReinicia");
-    botonColor1 = creaBoton(divPanel, " ", "botonColor1", "botonColor");
-    botonColor2 = creaBoton(divPanel, " ", "botonColor2", "botonColor");
-    botonColor3 = creaBoton(divPanel, " ", "botonColor3", "botonColor");
-    botonColor4 = creaBoton(divPanel, " ", "botonColor4", "botonColor");
-    botonOrdena = creaBoton(divPanel, "", "botonOrdena");
+    var divPanel = creaNodo(contenedor, "div", "divPanel", "Categoría:")
+    var botonReinicia = creaBoton(divPanel, "", "botonReinicia")
+    var botonColor1 = creaBoton(divPanel, " ", "botonColor1", "botonColor")
+    var botonColor2 = creaBoton(divPanel, " ", "botonColor2", "botonColor")
+    var botonColor3 = creaBoton(divPanel, " ", "botonColor3", "botonColor")
+    var botonColor4 = creaBoton(divPanel, " ", "botonColor4", "botonColor")
+    var botonOrdena = creaBoton(divPanel, "", "botonOrdena")
 
-    botonColor1.setAttribute("style", "background-color: lightskyblue");
-    botonColor2.setAttribute("style", "background-color: lightsalmon");
-    botonColor3.setAttribute("style", "background-color: lightgreen");
-    botonColor4.setAttribute("style", "background-color: lightgoldenrodyellow");
+    botonColor1.setAttribute("style", "background-color: lightskyblue")
+    botonColor2.setAttribute("style", "background-color: lightsalmon")
+    botonColor3.setAttribute("style", "background-color: lightgreen")
+    botonColor4.setAttribute("style", "background-color: lightgoldenrodyellow")
 	
-	creaNodo(botonReinicia, "span", null, null, null, "glyphicon glyphicon-refresh");
-    creaNodo(botonOrdena, "span", null, null, null, "glyphicon glyphicon-resize-vertical");
+    creaNodo(botonReinicia, "span", null, null, null, "glyphicon glyphicon-refresh")
+    creaNodo(botonOrdena, "span", null, null, null, "glyphicon glyphicon-resize-vertical")
 }
 
+
+function generarAyuda(){
+    var mensajeSelect = creaNodo(contenedor, "span", null, "Selecciona los productos", null, "ayuda")
+    var mensajeNoSelect = creaNodo(contenedor, "span", null, "Deselecciona los productos", null, "ayuda")
+    var mensajeTacha = creaNodo(contenedor, "span", null, "Tacha lo seleccionado", null, "ayuda")
+    var mensajeBorra = creaNodo(contenedor, "span", null, "Borra lo seleccionado", null, "ayuda")
+    var mensajeReinicia = creaNodo(contenedor, "span", null, "Reinicia los colores", null, "ayuda")
+    var mensajeOrdena = creaNodo(contenedor, "span", null, "Ordena los productos por color", null, "ayuda")
+    var mensajeMas = creaNodo(contenedor, "span", null, "Crea un producto con los datos", null, "ayuda")
+
+    var divBotones = document.getElementById("divBotones")
+    var divPanel = document.getElementById("divPanel")
+    var divInputs = document.getElementById("divInputs")
+
+    divBotones.insertBefore(mensajeSelect, document.getElementById("botonSelect"))
+    divBotones.insertBefore(mensajeNoSelect, document.getElementById("botonNoSelect"))
+    divBotones.insertBefore(mensajeTacha, document.getElementById("botonTacha"))
+    divBotones.insertBefore(mensajeBorra, document.getElementById("botonBorra"))
+
+    divPanel.insertBefore(mensajeReinicia, document.getElementById("botonReinicia"))
+    divPanel.insertBefore(mensajeOrdena, document.getElementById("botonOrdena"))
+
+    divInputs.insertBefore(mensajeMas, document.getElementById("botonMas"))
+
+    mostrarAyuda()
+}
+
+function mostrarAyuda(){
+    var ayudas = document.getElementsByClassName("ayuda")
+    for (var i = 0; i < ayudas.length; i++) {
+        if (ayudas[i].style.display == "none")
+            ayudas[i].style.display = "inline"
+        else
+            ayudas[i].style.display = "none"
+    }
+}
+
+
 function generarInputs(){
-    divInputs = creaNodo(contenedor, "div", "divInputs");
-    inputCantidad = creaNodo(divInputs, "input", "inputCantidad",null,"number");
-    inputUnidad = creaNodo(divInputs, "input", "inputUnidad",null,"text");
-    inputProducto = creaNodo(divInputs, "input", "inputProducto",null,"text");
+    var divInputs = creaNodo(contenedor, "div", "divInputs")
+    var inputCantidad = creaNodo(divInputs, "input", "inputCantidad",null,"number")
+    var inputUnidad = creaNodo(divInputs, "input", "inputUnidad",null,"text")
+    var inputProducto = creaNodo(divInputs, "input", "inputProducto",null,"text")
 
-    inputCantidad.setAttribute("placeholder","Cant.");
-    inputUnidad.setAttribute("placeholder","Unid.");
-    inputProducto.setAttribute("placeholder","Producto");
+    inputCantidad.setAttribute("placeholder","Cant.")
+    inputUnidad.setAttribute("placeholder","Unid.")
+    inputProducto.setAttribute("placeholder","Producto")
 
-    botonMas = creaBoton(divInputs, "", "botonMas");
-	creaNodo(botonMas, "span", null, null, null, "glyphicon glyphicon-plus-sign");
+    var botonMas = creaBoton(divInputs, "", "botonMas")
+    creaNodo(botonMas, "span", null, null, null, "glyphicon glyphicon-plus-sign")
 
-    inputProducto.addEventListener('keypress', function (e) {
-        var key = e.which || e.keyCode;
+    inputProducto.addEventListener("keypress", function (e) {
+        var key = e.which || e.keyCode
         if (key === 13) { // 13 es enter
-            nuevoProducto();
-        }}, false);
+            nuevoProducto()
+        }}, false)
 }
 
 
 
 function listenerBotones(){
-    botonMas = document.getElementById("botonMas");
-    botonMas.addEventListener("click", nuevoProducto, false);
+    var botonMas = document.getElementById("botonMas")
+    botonMas.addEventListener("click", nuevoProducto, false)
 
-    var botonesColor = [];
-    botonesColor = document.getElementsByClassName("botonColor");
+    var botonesColor = []
+    botonesColor = document.getElementsByClassName("botonColor")
     Array.prototype.forEach.call(botonesColor, function(element){
-        element.addEventListener("click", cambiaColor, false);
-    }); 
+        element.addEventListener("click", cambiaColor, false)
+    })
 
-    botonReinicia = document.getElementById("botonReinicia");
-    botonReinicia.addEventListener("click", reiniciarColor, false);
+    var botonReinicia = document.getElementById("botonReinicia")
+    botonReinicia.addEventListener("click", reiniciarColor, false)
 
-    botonOrdena = document.getElementById("botonOrdena");
-    botonOrdena.addEventListener("click", reordenaColor, false);
+    var botonOrdena = document.getElementById("botonOrdena")
+    botonOrdena.addEventListener("click", reordenaColor, false)
 }
 
 
 
 function seleccionaTodo(modo){
-    hijos = divCarro.getElementsByClassName("producto");
-    for (i = 0; i < hijos.length; i++) {
-        check = hijos[i].getElementsByClassName("check");
+    var hijos = divCarro.getElementsByClassName("producto")
+    for (var i = 0; i < hijos.length; i++) {
+        var check = hijos[i].getElementsByClassName("check")
         if (modo == true){
-            check[0].checked = true;
+            check[0].checked = true
         }
         else{
-            check[0].checked = false;
+            check[0].checked = false
         } 
     }
 }
 
 
 function nuevoProducto(){
-    cantidadProducto = document.getElementById("inputCantidad").value;
-    unidadProducto =  document.getElementById("inputUnidad").value;
-    nombreProducto = document.getElementById("inputProducto").value;
+    var cantidadProducto = document.getElementById("inputCantidad").value
+    var unidadProducto =  document.getElementById("inputUnidad").value
+    var nombreProducto = document.getElementById("inputProducto").value
 
     if (cantidadProducto == "" || nombreProducto == "")
-        alert("Algun de los campos está vacío.");
+        alert("Algun de los campos está vacío.")
     else{
-        producto = creaNodo(divCarro, "div", null, cantidadProducto + unidadProducto + " " + nombreProducto, null, "producto");
-        check = creaNodo(producto, "input", null, null, "checkbox", "check");
-        producto.setAttribute("style", "background-color: white");
+        var producto = creaNodo(divCarro, "div", null, cantidadProducto + unidadProducto + " " + nombreProducto, null, "producto")
+        creaNodo(producto, "input", null, null, "checkbox", "check")
+        producto.setAttribute("style", "background-color: white")
 
-        document.getElementById("inputCantidad").value = "";
-        document.getElementById("inputUnidad").value = "";
-        document.getElementById("inputProducto").value = "";
-        almacenaLista();
-        document.getElementById("inputCantidad").focus();
+        document.getElementById("inputCantidad").value = ""
+        document.getElementById("inputUnidad").value = ""
+        document.getElementById("inputProducto").value = ""
+        almacenaLista()
+        document.getElementById("inputCantidad").focus()
     }
-
-    
-
 }
+
 
 function borraProducto(){
     if (confirm("¿Desea borrar los elementos seleccionados?")){
-        hijos = divCarro.getElementsByClassName("producto");
-        contador = 0;
-        for (i = hijos.length-1; i >= 0; i--) {
-            check = hijos[i].getElementsByClassName("check");
+        var hijos = divCarro.getElementsByClassName("producto")
+        var contador = 0
+        for (var i = hijos.length-1; i >= 0; i--) {
+            var check = hijos[i].getElementsByClassName("check")
      
             if (check[0].checked){
-                contador++;
-                hijoInterno = hijos[i].firstChild;
+                contador++
+                var hijoInterno = hijos[i].firstChild
                 while (hijoInterno != null) {
-                    borra = hijoInterno;
+                    var borra = hijoInterno
                     hijoInterno = hijoInterno.nextSibling
-                    hijos[i].removeChild(borra);
+                    hijos[i].removeChild(borra)
                 }
-                divCarro.removeChild(hijos[i]);
+                divCarro.removeChild(hijos[i])
             }
         }
         if (contador == 0)
-            alert("No se ha seleccionado ningún elemento.");
+            alert("No se ha seleccionado ningún elemento.")
     }
-    almacenaLista();
-
+    almacenaLista()
 }
 
 
 function tachaProducto(){
-    hijos = divCarro.getElementsByClassName("producto");
-    for (i = 0; i < hijos.length; i++) {
-        check = hijos[i].getElementsByClassName("check");
+    var hijos = divCarro.getElementsByClassName("producto")
+    for (var i = 0; i < hijos.length; i++) {
+        var check = hijos[i].getElementsByClassName("check")
 
         if (check[0].checked)
             if (hijos[i].style.textDecoration == "line-through")
-                hijos[i].style.textDecoration = "";
+                hijos[i].style.textDecoration = ""
             else
-                hijos[i].style.textDecoration = "line-through";
+                hijos[i].style.textDecoration = "line-through"
         
     }
-    almacenaLista();
-    
+    almacenaLista()
 }
 
 
 function cambiaColor(){
-    color = this.style.backgroundColor;
+    var color = this.style.backgroundColor
     
-    hijos = divCarro.getElementsByClassName("producto");
-    for (i = 0; i < hijos.length; i++) {
-        check = hijos[i].getElementsByClassName("check");
-
+    var hijos = divCarro.getElementsByClassName("producto")
+    for (var i = 0; i < hijos.length; i++) {
+        var check = hijos[i].getElementsByClassName("check")
         if (check[0].checked)
-        hijos[i].setAttribute("style", "background-color: " + color);
-        
+            hijos[i].setAttribute("style", "background-color: " + color)
     }
-    almacenaLista();
+    almacenaLista()
 }
 
 
 function reiniciarColor(){
-    color = "white";
+    var color = "white"
     
-    hijos = divCarro.getElementsByClassName("producto");
-    for (i = 0; i < hijos.length; i++) {
-        check = hijos[i].getElementsByClassName("check");
-        hijos[i].setAttribute("style", "background-color: " + color);
+    var hijos = divCarro.getElementsByClassName("producto")
+    for (var i = 0; i < hijos.length; i++) {
+        hijos[i].getElementsByClassName("check")
+        hijos[i].setAttribute("style", "background-color: " + color)
         
     }
-    almacenaLista();
+    almacenaLista()
 }
-
 
 
 function reordenaColor(){
-    arrayColores = ["lightskyblue", "lightsalmon", "lightgreen", "lightgoldenrodyellow"];
-    contador = 0;
+    var arrayColores = ["lightskyblue", "lightsalmon", "lightgreen", "lightgoldenrodyellow"]
+    var contador = 0
     for (var i = 0; i < arrayColores.length; i++) {
         
-        hijos = divCarro.getElementsByClassName("producto");
-        for (j = contador; j < hijos.length; j++) {
+        var hijos = divCarro.getElementsByClassName("producto")
+        for (var j = contador; j < hijos.length; j++) {
             if (hijos[j].style.backgroundColor == arrayColores[i]){
-                divCarro.insertBefore(hijos[j], hijos[contador]);
-                contador++;
+                divCarro.insertBefore(hijos[j], hijos[contador])
+                contador++
             }
         }
     }
-    almacenaLista();
+    almacenaLista()
 }
-
 
 
 //funcion generica para crear nodos
 function creaNodo(padre, tagNodo, id, texto, tipo, clase, source, valor){
-    nodo = document.createElement(tagNodo);
-    padre.appendChild(nodo);
+    var nodo = document.createElement(tagNodo)
+    padre.appendChild(nodo)
 
     if (texto != null)
-        nodo.textContent = texto;
+        nodo.textContent = texto
     if (tagNodo == "input")
-        nodo.setAttribute("type", tipo);
+        nodo.setAttribute("type", tipo)
     if (id != null)
-        nodo.id = id;
+        nodo.id = id
     if (source != null)
-        nodo.setAttribute("src", source);
+        nodo.setAttribute("src", source)
     if (clase != null)
-        nodo.className = clase;
+        nodo.className = clase
     if (valor != null)
-        nodo.value = valor;
-    return nodo;
+        nodo.value = valor
+    return nodo
 }
 
 
 //funcion generica para crear botones
 function creaBoton(padre, texto, id, clase){
-    nodo = document.createElement("button");
-    nodo.textContent = texto;
+    var nodo = document.createElement("button")
+    nodo.textContent = texto
     if (id != null)
-        nodo.id = id;
+        nodo.id = id
     if (clase != null)
-        nodo.className = clase;
-    padre.appendChild(nodo);
-    return nodo;
+        nodo.className = clase
+    padre.appendChild(nodo)
+    return nodo
 }
 
 
 //almacenamiento en localstorage de la lista para navegadores que lo soporten
 function almacenaLista(){
     if(window.navigator.userAgent.indexOf("Edge") == -1){
-        lista = divCarro.getElementsByClassName("producto");
-        guardar = "";
+        var lista = divCarro.getElementsByClassName("producto")
+        var guardar = ""
         for (var i = 0; i < lista.length; i++) {
-            guardar += lista[i].textContent + "|";
-            guardar += lista[i].style.backgroundColor + "|";
+            guardar += lista[i].textContent + "|"
+            guardar += lista[i].style.backgroundColor + "|"
             if (lista[i].style.textDecoration == "line-through")
-                guardar += "false" + "|";
+                guardar += "false" + "|"
             else
-                guardar += "true" + "|";
+                guardar += "true" + "|"
         }
-//        alert(lista[0].textContent);
-    //    localStorage.setItem("lista", JSON.stringify(lista));
-   //     alert("guardado");
-    localStorage.setItem("lista", guardar);
+        localStorage.setItem("lista", guardar)
     }
 }
 
+
 function recuperaLista(){
     if(window.navigator.userAgent.indexOf("Edge") == -1){
-       // var lista = [];
-      //  lista = JSON.parse(localStorage.getItem("lista"));
-      storage = localStorage.getItem("lista");
-      if (storage != null){
-        guardado = storage.split("|");
+        var storage = localStorage.getItem("lista")
+        if (storage != null){
+            var guardado = storage.split("|")
         
             for (var i = 0; i < guardado.length-2; i= i+3) {
-           //     divCarro.appendChild(lista[i]);
-             //   alert(lista[i].textContent);
-             producto = creaNodo(divCarro, "div", null, guardado[i + 0], null, "producto");
-             check = creaNodo(producto, "input", null, null, "checkbox", "check");
-             producto.setAttribute("style", "background-color: " + guardado[i + 1]);
-             if (guardado[i + 2] == "false")
-                producto.style.textDecoration = "line-through";
-             divCarro.appendChild(producto);
-
+                var producto = creaNodo(divCarro, "div", null, guardado[i + 0], null, "producto")
+                creaNodo(producto, "input", null, null, "checkbox", "check")
+                producto.setAttribute("style", "background-color: " + guardado[i + 1])
+                if (guardado[i + 2] == "false")
+                    producto.style.textDecoration = "line-through"
+                divCarro.appendChild(producto)
             }
         }
-       //alert("recuperado");
     }
 }

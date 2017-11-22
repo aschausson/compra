@@ -18,17 +18,14 @@ body{
 }
 
 #divTitulo{
-  /*  width: 100%;*/
 	display: flex;
 	flex-flow: row nowrap;
 	align-items: flex-start;
-
-
 }
 
 #titulo{
-		margin-top: 0;
-		font-size: 35px;
+	margin-top: 0;
+	font-size: 35px;
 }
 
 h1{
@@ -39,19 +36,8 @@ h1{
 #carro{
     width: 60px;
 	height: 50px;
-
-	/*margin-bottom: 30px;*/
 }
-/*
-#titulo{
-    display: inline-block;
-}*/
-/*
-#divBotones{
-    width: 60%;
-    display: inline-block;
-	height: 50px;
-}*/
+
 
 button{
     width: 30px;
@@ -70,11 +56,8 @@ button span{
 
 #divPanel{
     min-width: 255px;
-  /*  border: 2px solid orange;
-    background-color: darkgrey;*/
     border-radius: 5px;
     float: right;
-	
 }
 
 #divCarro{
@@ -87,20 +70,18 @@ button span{
     width: 100%;
     height: 30px;
     font-size: 18px;
-padding-left: 7px;
-
-display: flex;
-flex-flow:  row-reverse nowrap;
-justify-content: flex-end;
-align-items: baseline; 
-
+    padding-left: 7px;
+    display: flex;
+    flex-flow:  row-reverse nowrap;
+    justify-content: flex-end;
+    align-items: baseline; 
 }
 
 #divInputs, #divPanel, #divBotones{
-display: flex;
-flex-flow:  row wrap;
-align-items: center; 
-	height: 50px;
+    display: flex;
+    flex-flow:  row wrap;
+    align-items: center; 
+    min-height: 50px;
 }
 
 #inputCantidad{
@@ -113,4 +94,20 @@ align-items: center;
 
 #inputUnidad{
     width: 35px;
+}
+
+span{
+    width: 90%;
+    text-align: right;
+}
+
+#botonAyuda{
+    width: 98%;
+    text-align: right;
+}
+
+h1{
+    border-bottom: 5px solid black;
+    padding-bottom: 0px;
+    padding-left: 6px;
 }
